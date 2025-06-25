@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
   {
     id: 1,
     title: "I. Strong Foundations Scheme",
-    count: 16,
+    count: 5,
     children: [
       "Choosing a Niche",
       "Market Research",
@@ -72,7 +72,7 @@ export const Sidebar = () => {
         {isOpen ? (
           <>
             <div className="bg-[#5035f6] text-white px-4 py-3 flex justify-between items-center relative">
-              <h2 className="text-lg font-semibold flex items-center gap-2">
+              <h2 className="text-[15px] font-semibold flex items-center gap-2">
                 📘 WOW Courses Formula 3.0
               </h2>
             </div>
@@ -115,7 +115,7 @@ export const Sidebar = () => {
                               onClick={() => handleTitleClick(child)}
                             >
                               <input type="radio" name="subtopic" checked={selectedTitle === child} readOnly />
-                              <span className="text-sm text-gray-800">{child}</span>
+                              <span className="text-sm text-gray-800  truncate max-w-[180px]">{child}</span>
                             </li>
                           ))}
                         </ul>
