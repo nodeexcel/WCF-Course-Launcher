@@ -14,7 +14,6 @@ class TargetGroup(BaseModel):
 
 class CourseTopic(BaseModel):
     niche: str
-    target_audience: str
 
 
 class GenerateCourse(BaseModel):

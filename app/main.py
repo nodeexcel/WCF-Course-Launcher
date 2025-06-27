@@ -1,17 +1,35 @@
-
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.schema import *
-from app.prompts import *
-from app.utils import get_gpt_response
+from .schema import (
+    ChoosingNiche,
+    CourseTopic,
+    GenerateCourse,
+    MarketResearch,
+    TargetGroup)
+from .prompts import (
+    choosing_niche_prompt,
+    course_topic_problem_prompt,
+    generate_course_prompt,
+    market_research_prompt,
+    target_group_prompt)
+from .utils import get_gpt_response
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/", response_class=JSONResponse)
 async def home():
     return JSONResponse(content={
-        "message": "Welcome to the Course Creation Assistant API"}
+        "message": "Welcome to the Course Creation Assistant API"}, status_code=200
     )
 
 @app.post("/module1/choosing-niche")
@@ -27,18 +45,13 @@ async def choosing_niche(
         }
     )
     result_list = [line.strip() for line in result.split("\n") if line.strip()]
-    # return result_list
-    print(type(result_list))
-    print(len(result_list))
-    print(result_list)
     return JSONResponse(content={"result": result_list}, status_code=200) 
 
 
-# @app.post("/market_research")
-# async def market_research(request: MarketResearch):
-#     print(request.niche)
-#     result = get_gpt_response(market_research_prompt, {"niche": niche})
-#     return JSONResponse(content={"result": result})
+@app.post("/module1/market-research")
+async def market_research(request: MarketResearch):
+    result = get_gpt_response(market_research_prompt, {"niche": request.niche})
+    return JSONResponse(content={"result": result})
 
 @app.post("/module1/target-group")
 async def target_group(
@@ -52,56 +65,29 @@ async def target_group(
     )
     return JSONResponse(content={"result": result})
 
-# @app.post("/course_topic")
-# async def course_topic(
-#     request: Request,
-#     niche: str = Form(...),
-#     target_audience: str = Form(...)
-# ):
-#     result = get_gpt_response(
-#         course_topic_problem_prompt,
-#         {
-#             "niche": niche,
-#             "target_audience": target_audience
-#         }
-#     )
-#     return JSONResponse(content={"result": result})
+@app.post("/module1/course-topic")
+async def course_topic(
+    request: CourseTopic
+):
+    result = get_gpt_response(
+        course_topic_problem_prompt,
+        {
+            "niche": request.niche
+        }
+    )
+    return JSONResponse(content={"result": result})
 
-# @app.post("/generate_course")
-# async def generate_course(
-#     request: Request,
-#     profession: str = Form(...),
-#     passions: str = Form(...),
-#     transformation: str = Form(...),
-#     trends: str = Form(...)
-# ):
-#     result = get_gpt_response(
-#         generate_course_prompt,
-#         {
-#             "profession": profession,
-#             "passions": passions,
-#             "transformation": transformation,
-#             "trends": trends
-#         }
-#     )
-#     return JSONResponse(content={"result": result})
-
-# @app.post("/choosing_niche")
-# async def choosing_niche(
-#     request: Request,
-#     target_group: str = Form(...),
-#     problem: str = Form(...),
-#     benefit: str = Form(...)
-# ):
-#     result = get_gpt_response(
-#         choosing_niche_prompt,
-#         {
-#             "target_group": target_group,
-#             "problem": problem,
-#             "benefit": benefit
-#         }
-#     )
-#     print(type(result))
-#     print(len(result))
-#     print(result)
-#     return JSONResponse(content={"result": result}) 
+@app.post("/module1/generate-course")
+async def generate_course(
+    request: GenerateCourse
+):
+    result = get_gpt_response(
+        generate_course_prompt,
+        {
+            "profession": request.profession,
+            "passions": request.passions,
+            "transformation": request.transformation,
+            "trends": request.trends
+        }
+    )
+    return JSONResponse(content={"result": result})

@@ -69,7 +69,7 @@ Divide the profile into 6 parts:
 """
 
 course_topic_problem_prompt = """
-Based on the customer profile targeting "{target_audience}" in the field of "{niche}", prepare a list of 5 ideas for a course or other digital product.
+Based on the customer profile "{niche}", prepare a list of 5 ideas for a course or other digital product.
 
 For each product idea, provide:
 – A short promise (what effect or result the course will give to the learner)
