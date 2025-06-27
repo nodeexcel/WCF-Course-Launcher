@@ -18,14 +18,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
   {
     id: 2,
     title: "II. Course Creation Accelerator",
-    count: 5,
+    count: 6,
     children: [
       "Live Product iDEAS",
       "Evergreen",
       "Product Ladder",
       "Course Structure",
       "Subscription Product",
-      "Unique Mechanism"
+      "Packaging Process"
     ],
   },
 ];

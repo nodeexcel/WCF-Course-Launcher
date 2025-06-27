@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from './navbar';
+import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 import { ContentArea } from './ContentArea';
 import { useLocation } from 'react-router-dom';
 import { ContentModal } from './ContentModal';
+import { LiveProductIdeasModal } from './module_2/LiveProductIdeasModal';
+import { EvergreenModal } from './module_2/EvergreenModal';
+import { ProductLadderModal } from './module_2/ProductLadderModal';
+import { CourseStructureModal } from './module_2/CourseStructureModal';
+import { SubscriptionProductModal } from './module_2/SubscriptionProductModal';
+import { PackagingProcessModal } from './module_2/PackagingProcessModal';
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -31,7 +37,21 @@ const DashboardLayout = () => {
       </div>
       {modalOpen && (
         <div className="fixed bottom-20 right-6 z-50">
-          <ContentModal heading={selectedTitle || 'Assistant'} onClose={() => setModalOpen(false)} onNicheComplete={() => setNicheCompleted(true)} />
+          {selectedTitle === 'Live Product iDEAS' ? (
+            <LiveProductIdeasModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Evergreen' ? (
+            <EvergreenModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Product Ladder' ? (
+            <ProductLadderModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Course Structure' ? (
+            <CourseStructureModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Subscription Product' ? (
+            <SubscriptionProductModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Packaging Process' ? (
+            <PackagingProcessModal onClose={() => setModalOpen(false)} />
+          ) : (
+            <ContentModal heading={selectedTitle || 'Assistant'} onClose={() => setModalOpen(false)} onNicheComplete={() => setNicheCompleted(true)} />
+          )}
         </div>
       )}
       <button

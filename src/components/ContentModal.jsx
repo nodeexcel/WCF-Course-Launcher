@@ -134,7 +134,7 @@ export const ContentModal = ({ heading, onClose, onNicheComplete }) => {
       navigator.clipboard.writeText(point);
       toast.success('Copied and saved your selection for future reference!');
     } else {
-      toast.success('Your selection has been saved!');
+      toast.success('Copied and saved your selection for future reference!');
     }
   };
 
@@ -153,7 +153,7 @@ export const ContentModal = ({ heading, onClose, onNicheComplete }) => {
       </div>
       <div className="flex-1 p-4 overflow-y-auto">
         {isDefault ? (
-          <p className="text-gray-700 text-lg mt-2">Please select a course from the sidebar to begin.</p>
+          <p className="text-gray-700 text-lg mt-2">Please start with choosing a niche.</p>
         ) : (
           <form ref={formRef} onSubmit={handleSubmit}>
             {formConfig.map(field => (
@@ -185,6 +185,9 @@ export const ContentModal = ({ heading, onClose, onNicheComplete }) => {
                 <div className="font-bold mb-2">Result:</div>
                 {heading === 'Choosing a Niche' && (
                   <div className="mb-2 text-xs text-gray-500 italic">Double-click on a niche below to copy it and save for future reference.</div>
+                )}
+                {(heading === 'Market Research' || heading === 'Target Group' || heading === 'The Topic of the Course and the Problem you are solving' || heading === '4 Ways to Generate an Online Course Idea') && (
+                  <div className="mb-2 text-xs text-gray-500 italic">Please save your result for future reference.</div>
                 )}
                 <ol className="list-decimal pl-5 space-y-2">
                   {Array.isArray(apiResponse.result)
