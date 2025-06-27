@@ -9,8 +9,7 @@ export const courseForms = {
     { label: "Your Niche:", name: "niche", type: "text" }
   ],
   "Target Group": [
-    { label: "Your Niche:", name: "niche", type: "text" },
-    { label: "Target Audience:", name: "targetAudience", type: "text" }
+    { label: "Your Niche:", name: "niche", type: "text" }
   ],
   "The Topic of the Course and the Problem you are solving": [
     { label: "Your Niche:", name: "niche", type: "text" },

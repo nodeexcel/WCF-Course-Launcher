@@ -15,10 +15,23 @@ import { useNavigate, useLocation } from 'react-router-dom';
       "4 Ways to Generate an Online Course Idea",
     ],
   },
+  {
+    id: 2,
+    title: "II. Course Creation Accelerator",
+    count: 5,
+    children: [
+      "Live Product iDEAS",
+      "Evergreen",
+      "Product Ladder",
+      "Course Structure",
+      "Subscription Product",
+      "Unique Mechanism"
+    ],
+  },
 ];
 
 
-export const Sidebar = () => {
+export const Sidebar = ({ nicheCompleted }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [expandedItem, setExpandedItem] = useState(null);
   const navigate = useNavigate();
@@ -108,16 +121,23 @@ export const Sidebar = () => {
                       {/* Children list */}
                       {expandedItem === item.id && (
                         <ul className="mt-4 space-y-2 bg-gray-50 p-4 rounded">
-                          {item.children.map((child, index) => (
-                            <li
-                              key={index}
-                              className={`flex items-center gap-2 cursor-pointer ${selectedTitle === child ? 'font-bold text-blue-900' : ''}`}
-                              onClick={() => handleTitleClick(child)}
-                            >
-                              <input type="radio" name="subtopic" checked={selectedTitle === child} readOnly />
-                              <span className="text-sm text-gray-800  truncate max-w-[180px]">{child}</span>
-                            </li>
-                          ))}
+                          {item.children.map((child, index) => {
+                            const isChoosingNiche = child === 'Choosing a Niche';
+                            const isDisabled = !isChoosingNiche && !nicheCompleted;
+                            return (
+                              <li
+                                key={index}
+                                className={`flex items-center gap-2 cursor-pointer ${selectedTitle === child ? 'font-bold text-blue-900' : ''} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                onClick={() => {
+                                  if (!isDisabled) handleTitleClick(child);
+                                }}
+                                style={isDisabled ? { pointerEvents: 'none' } : {}}
+                              >
+                                <input type="radio" name="subtopic" checked={selectedTitle === child} readOnly disabled={isDisabled} />
+                                <span className="text-sm text-gray-800  truncate max-w-[180px]">{child}</span>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </div>

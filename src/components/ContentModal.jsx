@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { courseForms } from '../data/courseForms';
+import toast, { Toaster } from 'react-hot-toast';
 
-export const ContentModal = ({ heading, onClose }) => {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export const ContentModal = ({ heading, onClose, onNicheComplete }) => {
   const isDefault = heading === 'Assistant';
   const formConfig = courseForms[heading] || [];
   const [formData, setFormData] = useState({});
@@ -22,15 +25,26 @@ export const ContentModal = ({ heading, onClose }) => {
   useEffect(() => {
     const autofillMap = {
       'Market Research': ['niche'],
+      'Target Group': ['niche'],
+      'The Topic of the Course and the Problem you are solving': ['niche'],
     };
-    if (selectedPoint && autofillMap[heading]) {
+    if (autofillMap[heading]) {
+      const selectedNiche = localStorage.getItem('selected_Choosing a Niche') || localStorage.getItem('selected_Market Research') || '';
+      if (selectedNiche) {
+        const newFormData = { ...formData };
+        autofillMap[heading].forEach(fieldName => {
+          newFormData[fieldName] = selectedNiche;
+        });
+        setFormData(newFormData);
+      }
+    } else if (selectedPoint && autofillMap[heading]) {
       const newFormData = { ...formData };
       autofillMap[heading].forEach(fieldName => {
         newFormData[fieldName] = selectedPoint;
       });
       setFormData(newFormData);
     }
-  }, [selectedPoint, formConfig, heading]);
+  }, [heading]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,14 +57,32 @@ export const ContentModal = ({ heading, onClose }) => {
     let url = '';
     let payload = {};
     if (heading === 'Choosing a Niche') {
-      url = 'http://116.202.210.102:8111/module1/choosing-niche';
+      url = `${API_BASE_URL}/module1/choosing-niche`;
       payload = {
         target_group: formData.targetGroup,
         problem: formData.problem,
         benefit: formData.benefit,
       };
     } else if (heading === 'Market Research') {
-      url = 'http://116.202.210.102:8111/module1/market-research';
+      url = `${API_BASE_URL}/module1/market-research`;
+      payload = {
+        niche: formData.niche,
+      };
+    } else if (heading === 'The Topic of the Course and the Problem you are solving') {
+      url = `${API_BASE_URL}/module1/course-topic`;
+      payload = {
+        niche: formData.niche,
+      };
+    } else if (heading === '4 Ways to Generate an Online Course Idea') {
+      url = `${API_BASE_URL}/module1/generate-course`;
+      payload = {
+        profession: formData.profession,
+        passions: formData.passions,
+        transformation: formData.personalTransformation,
+        trends: formData.trends,
+      };
+    } else if (heading === 'Target Group') {
+      url = `http://116.202.210.102:8111/module1/target-group`;
       payload = {
         niche: formData.niche,
       };
@@ -70,6 +102,9 @@ export const ContentModal = ({ heading, onClose }) => {
       const data = await response.json();
       setApiResponse(data);
       localStorage.setItem(`response_${heading}`, JSON.stringify(data));
+      if (heading === 'Choosing a Niche' && onNicheComplete) {
+        onNicheComplete();
+      }
       setLoading(false);
       setTimeout(() => {
         if (responseRef.current) {
@@ -95,11 +130,17 @@ export const ContentModal = ({ heading, onClose }) => {
   const handlePointDoubleClick = (point) => {
     setSelectedPoint(point);
     localStorage.setItem(`selected_${heading}`, point);
-    alert('Your selection has been saved!');
+    if (navigator && navigator.clipboard) {
+      navigator.clipboard.writeText(point);
+      toast.success('Copied and saved your selection for future reference!');
+    } else {
+      toast.success('Your selection has been saved!');
+    }
   };
 
   return (
     <div className="fixed bottom-20 right-6 z-50 w-[400px] h-[450px] bg-white rounded-xl shadow-2xl flex flex-col border border-gray-200">
+      <Toaster position="top-right" />
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-[#5035f6] rounded-t-xl">
         <h2 className="text-[15px] font-bold text-white">{isDefault ? 'Assistant' : heading}</h2>
         <button
@@ -142,13 +183,36 @@ export const ContentModal = ({ heading, onClose }) => {
             {apiResponse.result ? (
               <>
                 <div className="font-bold mb-2">Result:</div>
+                {heading === 'Choosing a Niche' && (
+                  <div className="mb-2 text-xs text-gray-500 italic">Double-click on a niche below to copy it and save for future reference.</div>
+                )}
                 <ol className="list-decimal pl-5 space-y-2">
                   {Array.isArray(apiResponse.result)
                     ? apiResponse.result.map((item, idx) => (
-                        <li key={idx} onDoubleClick={() => handlePointDoubleClick(item.replace(/^\d+\.\s*/, ''))} className="cursor-pointer">{item.replace(/^\d+\.\s*/, '')}</li>
+                        heading === 'Choosing a Niche' ? (
+                          <li
+                            key={idx}
+                            onDoubleClick={() => handlePointDoubleClick(item.replace(/^\d+\.\s*/, ''))}
+                            className="cursor-pointer"
+                          >
+                            {item.replace(/^\d+\.\s*/, '')}
+                          </li>
+                        ) : (
+                          <li key={idx}>{item.replace(/^\d+\.\s*/, '')}</li>
+                        )
                       ))
                     : apiResponse.result.split(/\n\d+\./).filter(Boolean).map((item, idx) => (
-                        <li key={idx} onDoubleClick={() => handlePointDoubleClick(item.trim().replace(/^\d+\.\s*/, ''))} className="cursor-pointer">{item.trim().replace(/^\d+\.\s*/, '')}</li>
+                        heading === 'Choosing a Niche' ? (
+                          <li
+                            key={idx}
+                            onDoubleClick={() => handlePointDoubleClick(item.trim().replace(/^\d+\.\s*/, ''))}
+                            className="cursor-pointer"
+                          >
+                            {item.trim().replace(/^\d+\.\s*/, '')}
+                          </li>
+                        ) : (
+                          <li key={idx}>{item.trim().replace(/^\d+\.\s*/, '')}</li>
+                        )
                       ))}
                 </ol>
                 {selectedPoint && (
@@ -163,7 +227,7 @@ export const ContentModal = ({ heading, onClose }) => {
               <div>{apiResponse.info}</div>
             ) : null}
             <button
-              className="mt-4 px-4 py-1 bg-[#5035f6] text-white rounded hover:bg-[#3d28b1]"
+              className="w-full bg-[#5035f6] text-white py-2 rounded hover:bg-[#3d28b1] cursor-pointer mt-4"
               onClick={handleRegenerate}
             >
               Regenerate
@@ -174,4 +238,3 @@ export const ContentModal = ({ heading, onClose }) => {
     </div>
   );
 };
-

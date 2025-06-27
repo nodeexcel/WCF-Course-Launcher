@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './navbar';
-import { Sidebar } from './sidebar';
+import { Sidebar } from './Sidebar';
 import { ContentArea } from './ContentArea';
 import { useLocation } from 'react-router-dom';
 import { ContentModal } from './ContentModal';
@@ -10,19 +10,28 @@ const DashboardLayout = () => {
   const params = new URLSearchParams(location.search);
   const selectedTitle = params.get('title') || '';
   const [modalOpen, setModalOpen] = useState(false);
+  // Track if Choosing a Niche is completed
+  const [nicheCompleted, setNicheCompleted] = useState(!!localStorage.getItem('response_Choosing a Niche'));
+
+  // Keep in sync with localStorage (in case of manual clear, etc.)
+  useEffect(() => {
+    const handler = () => setNicheCompleted(!!localStorage.getItem('response_Choosing a Niche'));
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   return (
     <div className='flex flex-col h-screen'>
       <Navbar />
       <div className='flex flex-1'>
-        <Sidebar />
+        <Sidebar nicheCompleted={nicheCompleted} />
         <div className='flex-1'>
           <ContentArea selectedTitle={selectedTitle} />
         </div>
       </div>
       {modalOpen && (
         <div className="fixed bottom-20 right-6 z-50">
-          <ContentModal heading={selectedTitle || 'Assistant'} onClose={() => setModalOpen(false)} />
+          <ContentModal heading={selectedTitle || 'Assistant'} onClose={() => setModalOpen(false)} onNicheComplete={() => setNicheCompleted(true)} />
         </div>
       )}
       <button
