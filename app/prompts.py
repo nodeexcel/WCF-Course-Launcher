@@ -334,3 +334,278 @@ Outcomes I help clients achieve:
 Feel free to include strategic insights, how-to tips, trends, expert takes, or light case study ideas. 
 Write in a tone that will catch the attention of an editor and the curiosity of a potential reader.
 """
+
+expert_activities_prompt = """
+Help me find opportunities to validate my expertise through speaking engagements, articles, and interviews, and suggest specific topics and titles that I can use.
+
+INFORMATION ABOUT MY EXPERTISE:
+- Primary field/niche: {niche}
+- Experience and achievements: {experience_achievements}
+- Unique approach/methodology: {methodology_approach}
+- Target group: {target_group}
+- Main problems I solve: {problems}
+
+EXPOSURE FORM PREFERENCES:
+{exposure_forms}
+
+SEARCH PARAMETERS:
+- Geographical Scope: {geographical_scope}
+- Languages: {languages}
+
+Based on the above, prepare:
+
+1. LIST OF OFFLINE SPEAKING OPPORTUNITIES  
+Suggest 10 relevant conferences or events (with names and approximate dates or season) where I could apply to speak or participate in expert panels.
+
+2. LIST OF MEDIA AND PUBLICATIONS  
+Suggest:
+- 5 industry journals that publish expert articles
+- 5 websites open to guest articles or thought leadership content
+- 5 mainstream media outlets (magazines, TV, newspapers) that might be interested in covering my topic
+- Add how to approach or submit articles/interview ideas
+
+3. LIST OF PODCASTS AND ONLINE MEDIA  
+Suggest:
+- 10 podcasts in my niche that feature expert interviews
+- 5 YouTube channels or video platforms that do guest interviews
+
+4. SUGGESTIONS FOR TITLES OF SPEECHES  
+Give 10 title ideas for talks I could give at events, summits, or panels. Titles should be attention-grabbing and match the problems I solve or insights I offer.
+
+5. SUGGESTIONS FOR ARTICLE TITLES  
+- 10 article titles for professional/industry-specific media
+- 10 article titles for general or mainstream audience
+Each article should include 3–5 bullet points describing what it would include.
+"""
+
+creating_content_prompt = """
+Help me create a detailed social media content plan for the next 4 weeks that will build my expert brand and engage my community.
+
+BASIC INFORMATION:
+- Target Platform: {platform}
+- Posting frequency: {frequency}
+- Main topic/niche: {niche}
+- Target audience: {audience}
+
+CONTENT FORMATS TO USE:
+{formats}
+
+CONTENT CATEGORIES TO INCLUDE:
+{categories}
+
+ADDITIONAL INFORMATION:
+- Unique knowledge/experience: {expertise}
+- Main problems I solve: {problems}
+- Communication style: {tone}
+
+Generate a 4-week social media content calendar with:
+- Days of the week to post
+- Post titles or engaging topics
+- Recommended content format for each post
+- Content category
+- A short 1–2 sentence description for each post explaining what it covers
+
+Ensure the calendar is diverse, aligned with my niche, emotionally engaging, and positions me as a thought leader while helping my audience feel understood and supported.
+"""
+
+content_rolls_ideas_prompt = """
+Help me generate a variety of short-form video content ideas (reels) that will build my expert brand, educate my audience, and include a natural call to action for my offer.
+
+INFORMATION ABOUT MY EXPERTISE:
+- Primary field/niche: {niche}
+- Target audience: {audience}
+- The most important problems I solve: {problems}
+- Main topics/areas of knowledge: {topics}
+- Main offer I want to promote: {offer_type}
+- Offer title: {offer_title}
+
+TYPES OF REELS TO GENERATE:
+{reel_types}
+
+CONTENT FORMAT PREFERENCES:
+- Reel length: 40–60 seconds
+- Tone of communication: {tone}
+
+For each reel idea, provide:
+- A title or hook that would capture attention
+- What the content will be about (1–2 sentence description)
+- The intended call to action (e.g. download lead magnet, sign up for webinar, book a call)
+"""
+
+content_roll_script_prompt = """
+Help me write a full short-form video script (Instagram Reel/TikTok/Shorts) that will attract and engage my audience and promote my offer.
+
+INFORMATION ABOUT MY OFFER:
+- Main topic/niche: {niche}
+- Offer I want to promote: {offer_type}
+- Offer Title: {offer_title}
+- The main promise of the offer: {offer_promise}
+- Link to the offer: {offer_link}
+
+TARGET GROUP INFORMATION:
+- Who is my ideal audience: {audience}
+- The main problem that hurts them: {pain_point}
+- What do they want to achieve: {goal}
+- Level of awareness of the problem: {awareness_level}
+
+TOPIC OF THE REEL:
+- Main topic I want to discuss: {reel_topic}
+- Specific tips/steps I want to present: {reel_tips}
+- Unique knowledge/experience that I can use: {expertise}
+
+STYLE PREFERENCES:
+- Tone of communication: {tone}
+- Sales type: {sales_style}
+- Reel length: 40-60 seconds
+
+BASED ON THIS INFO, WRITE:
+1. COMPLETE SCRIPT for the content reel, including:
+- Hook (first 3-5 seconds) — Write 3 alternative hooks that are punchy and problem/goal focused
+- Main content (20–30 seconds) — Deliver 3–5 valuable, actionable points on the topic
+- Transition to offer (around 5 seconds)
+- CTA #1 for ManyChat (e.g., “Comment ‘YES’ and I’ll send it over”)
+- CTA #2 for link click (e.g., “Or grab it from the link in bio/story”)
+"""
+
+lead_magnet_content_prompt = """
+Help me write a high-converting landing page copy for a lead magnet.
+
+LEAD MAGNET INFORMATION:
+- Type: {lead_magnet_type}
+- Title: {lead_magnet_title}
+- Main topic/niche: {topic}
+- Main promise/result: {promise}
+
+TARGET AUDIENCE DETAILS:
+- Ideal audience: {audience}
+- Main problem: {problem}
+- Desired outcome: {goal}
+- Awareness level: {awareness}
+- Key objections/concerns: {objections}
+
+LEAD MAGNET CONTENT:
+- Key topics covered: {topics}
+- Unique approach/expertise: {unique_approach}
+- Benefits: {benefits}
+- Includes templates/tools/checklists: {includes_tools}
+
+STYLE PREFERENCES:
+- Communication tone: {tone}
+- Header types: {header_styles}
+
+BASED ON THIS, WRITE:
+
+1. 5 headline options, each using a different style:
+- One with a result promise
+- One with a number (e.g. "5 ways to X")
+- One with a question (e.g. "How to achieve X despite Y")
+- One with secrets/discovery (e.g. "Discover X secrets of Y")
+- One with a problem angle (e.g. "Stop doing X if you want Y")
+
+2. A subheader:
+- Reinforcing the main value
+- Emotionally connecting with the audience’s pain/desire
+- 1–2 lines max
+
+3. 5 bullet benefits:
+- Each starting with an action verb (e.g. “Learn”, “Discover”, “Build”)
+- Specific and appealing
+- Bold key phrases
+
+4. A motivating call to action sentence:
+- Simple and clear
+- Encouraging immediate action
+"""
+
+about_me_prompt = """
+Help me create a short expert bio for my landing page that convinces visitors that I'm the best person to solve their problem and builds trust in my offer.
+
+BASIC INFORMATION:
+- Name and surname: {name_surname}
+- Main specialization/field: {specialization}
+- Who are you helping (target group): {target_group}
+- What exactly do you help with: {help_with}
+
+EXPERIENCE AND COMPETENCES:
+- Years of experience in the industry: {years_experience}
+- Main professional achievements: {main_achievements}
+- Education/Certifications relevant to the niche: {education_certifications}
+- Unique methodology/system (if you have one): {methodology_system}
+- Niche Specialization: {niche}
+
+EVIDENCE OF CREDIBILITY:
+- Number of clients/participants: {clients_number}
+- Specific customer results: {customer_results}
+- Awards/Honors: {awards_honors}
+- Publications/books/articles: {publications}
+- Speeches/lectures: {speeches_lectures}
+- Media/Interviews: {media_interviews}
+
+CURRENT ACTIVITY:
+- Main forms of cooperation: {cooperation_forms}
+- Who are you currently working with: {current_clients}
+- Own projects/brands: {own_projects}
+- Motto/philosophy of action: {motto_philosophy}
+
+STYLISTIC PREFERENCES:
+- Bio Tone: {tone}
+- Perspective: {perspective}
+- Length: {length}
+- Items to highlight: {highlight_items}
+
+Based on the information above, create a bio consisting of:
+- Paragraph 1: Starting with "I help [someone] with [what]" + main competencies
+- Paragraph 2: Experience, specialization and unique approach
+- Paragraph 3: Specific results, numbers, evidence of effectiveness
+- Paragraph 4: Current activity and motto/philosophy (optional)
+"""
+
+mini_offer_prompt = """
+Help me create complete landing page copy for my One Time Offer mini offer that will be offered after downloading the lead magnet. I want to convert free users into paying customers.
+
+INFORMATION ABOUT THE MINI OFFER:
+- Product type: {mini_offer_type}
+- Product Name: {mini_offer_title}
+- Main topic/niche: {niche}
+- Cena: 
+- Main promise/result: {key_promise}
+- Format/content: {content_format}
+
+TARGET GROUP INFORMATION:
+- Who are the recipients after downloading the lead magnet: {target_group}
+- What stops them from taking action: {pain_point}
+
+MINI OFFER CONTENT:
+- Key Product Elements/Modules: {key_elements}
+- Unique value/advantage: {unique_value}
+- Specific benefits for the customer: {benefits}
+- Bonuses/extras (if any): {bonuses}
+
+
+STYLE PREFERENCES:
+- Communication Tone: {tone}
+- Sales Approach: {sales_style}
+
+
+Based on the information above, create:
+
+1. 5 HEADER VERSIONS:
+- Each in a different style (promise, number, question, secret, problem)
+- Containing keywords for the target group
+- With a clear promise of value
+
+
+2. SUBBEADER:
+- Elaborating on the goal/problem the product solves
+- Maximum 2 sentences
+
+3. 5 BENEFIT POINTS:
+- Each in the form of one sentence
+- Specific and measurable (saving time, money, etc.)
+- Starting with strong verbs
+- With the ability to highlight key elements
+- Addressing various aspects of the client's problem
+
+4. CALL TO ACTION:
+- A sentence that will motivate you to act
+"""

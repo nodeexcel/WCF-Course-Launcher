@@ -3,29 +3,43 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .schema import (
+    AboutMe,
     ChoosingNiche,
+    ContentRollsIdeas,
+    ContentRollScript,
     CourseStructure,
     CourseTopic,
+    CreatingContent,
     EvergreenProduct,
     ExpertActions,
+    ExpertActivities,
     GenerateCourse,
+    LeadMagnetContent,
     LifeStory,
     LiveProduct,
     MarketResearch,
+    MiniOffer,
     PackagingProcess,
     ProductLadder,
     SubscriptionProductStructure,
     TargetGroup)
 from .prompts import (
+    about_me_prompt,
     choosing_niche_prompt,
+    content_rolls_ideas_prompt,
+    content_roll_script_prompt,
     course_structure_prompt,
     course_topic_problem_prompt,
+    creating_content_prompt,
     evergreen_product_prompt,
     expert_actions_prompt,
+    expert_activities_prompt,
     generate_course_prompt,
+    lead_magnet_content_prompt,
     life_story_prompt,
     live_product_prompt,
     market_research_prompt,
+    mini_offer_prompt,
     packaging_process_prompt,
     product_ladder_prompt,
     subscription_product_structure_prompt,
@@ -239,6 +253,173 @@ async def expert_actions(
             "target_group": request.target_group,
             "problems": request.problems,
             "outcomes": request.outcomes
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module3/expert-activities")
+async def expert_activities(
+    request: ExpertActivities
+):
+    result = get_gpt_response(
+        expert_activities_prompt,
+        {
+            "niche": request.niche,
+            "experience_achievements": request.experience_achievements,
+            "methodology_approach": request.methodology_approach,
+            "target_group": request.target_group,
+            "problems": request.problems,
+            "exposure_forms": request.exposure_forms,
+            "geographical_scope": request.geographical_scope,
+            "languages": request.languages
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module3/creating-content")
+async def creating_content(
+    request: CreatingContent
+):
+    result = get_gpt_response(
+        creating_content_prompt,
+        {
+            "platform": request.platform,
+            "frequency": request.frequency,
+            "niche": request.niche,
+            "audience": request.audience,
+            "formats": request.formats,
+            "categories": request.categories,
+            "expertise": request.expertise,
+            "problems": request.problems,
+            "tone": request.tone
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module4/content-rolls-ideas")
+async def content_rolls_ideas(
+    request: ContentRollsIdeas
+):
+    result = get_gpt_response(
+        content_rolls_ideas_prompt,
+        {
+            "niche": request.niche,
+            "audience": request.audience,
+            "problems": request.problems,
+            "topics": request.topics,
+            "offer_type": request.offer_type,
+            "offer_title": request.offer_title,
+            "reel_types": request.reel_types,
+            "tone": request.tone
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module4/content-roll-script")
+async def content_roll_script(
+    request: ContentRollScript
+):
+    result = get_gpt_response(
+        content_roll_script_prompt,
+        {
+            "niche": request.niche,
+            "offer_type": request.offer_type,
+            "offer_title": request.offer_title,
+            "offer_promise": request.offer_promise,
+            "offer_link": request.offer_link,
+            "audience": request.audience,
+            "pain_point": request.pain_point,
+            "goal": request.goal,
+            "awareness_level": request.awareness_level,
+            "reel_topic": request.reel_topic,
+            "reel_tips": request.reel_tips,
+            "expertise": request.expertise,
+            "tone": request.tone,
+            "sales_style": request.sales_style
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module4/lead-magnet-content")
+async def lead_magnet_content(
+    request: LeadMagnetContent
+):
+    result = get_gpt_response(
+        lead_magnet_content_prompt,
+        {
+            "lead_magnet_type": request.lead_magnet_type,
+            "lead_magnet_title": request.lead_magnet_title,
+            "topic": request.topic,
+            "promise": request.promise,
+            "audience": request.audience,
+            "problem": request.problem,
+            "goal": request.goal,
+            "awareness": request.awareness,
+            "objections": request.objections,
+            "topics": request.topics,
+            "unique_approach": request.unique_approach,
+            "benefits": request.benefits,
+            "includes_tools": request.includes_tools,
+            "tone": request.tone,
+            "header_styles": request.header_styles
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module4/about-me")
+async def about_me(
+    request: AboutMe
+):
+    result = get_gpt_response(
+        about_me_prompt,
+        {
+            "name_surname": request.name_surname,
+            "specialization": request.specialization,
+            "target_group": request.target_group,
+            "help_with": request.help_with,
+            "years_experience": request.years_experience,
+            "main_achievements": request.main_achievements,
+            "education_certifications": request.education_certifications,
+            "methodology_system": request.methodology_system,
+            "niche": request.niche,
+            "clients_number": request.clients_number,
+            "customer_results": request.customer_results,
+            "awards_honors": request.awards_honors,
+            "publications": request.publications,
+            "speeches_lectures": request.speeches_lectures,
+            "media_interviews": request.media_interviews,
+            "cooperation_forms": request.cooperation_forms,
+            "current_clients": request.current_clients,
+            "own_projects": request.own_projects,
+            "motto_philosophy": request.motto_philosophy,
+            "tone": request.tone,
+            "perspective": request.perspective,
+            "length": request.length,
+            "highlight_items": request.highlight_items
+        }
+    )
+    return JSONResponse(content={"result": result})
+
+@app.post("/module4/mini-offer")
+async def mini_offer(
+    request: MiniOffer
+):
+    result = get_gpt_response(
+        mini_offer_prompt,
+        {
+            "mini_offer_type": request.mini_offer_type,
+            "mini_offer_title": request.mini_offer_title,
+            "niche": request.niche,
+            "key_promise": request.key_promise,
+            "content_format": request.content_format,
+            "target_group": request.target_group,
+            "pain_point": request.pain_point,
+            "key_elements": request.key_elements,
+            "unique_value": request.unique_value,
+            "benefits": request.benefits,
+            "bonuses": request.bonuses,
+            "tone": request.tone,
+            "sales_style": request.sales_style
         }
     )
     return JSONResponse(content={"result": result})
