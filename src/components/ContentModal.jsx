@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { courseForms } from '../data/courseForms';
 import toast, { Toaster } from 'react-hot-toast';
+import { ExpertActionsArticlesModal } from './module_3/ExpertActionsArticlesModal';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -137,6 +138,10 @@ export const ContentModal = ({ heading, onClose, onNicheComplete }) => {
       toast.success('Copied and saved your selection for future reference!');
     }
   };
+
+  if (heading === '3 expert actions - articles') {
+    return <ExpertActionsArticlesModal onClose={onClose} />;
+  }
 
   return (
     <div className="fixed bottom-20 right-6 z-50 w-[400px] h-[450px] bg-white rounded-xl shadow-2xl flex flex-col border border-gray-200">

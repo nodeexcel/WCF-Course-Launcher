@@ -10,6 +10,14 @@ import { ProductLadderModal } from './module_2/ProductLadderModal';
 import { CourseStructureModal } from './module_2/CourseStructureModal';
 import { SubscriptionProductModal } from './module_2/SubscriptionProductModal';
 import { PackagingProcessModal } from './module_2/PackagingProcessModal';
+import { ExpertAvatarLifeStoryModal } from './module_3/ExpertAvatarLifeStoryModal';
+import { ExpertActivitiesModal } from './module_3/ExpertActivitiesModal';
+import { ContentMonthAdvanceModal } from './module_3/ContentMonthAdvanceModal';
+import { ContentRollsModal } from './module_4/ContentRollsModal';
+import { ScriptContentRollModal } from './module_4/ScriptContentRollModal';
+import { LeadMagnetPageModal } from './module_4/LeadMagnetPageModal';
+import { AboutYouLandingPageModal } from './module_4/AboutYouLandingPageModal';
+import { MiniOfferModal } from './module_4/MiniOfferModal';
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -49,6 +57,22 @@ const DashboardLayout = () => {
             <SubscriptionProductModal onClose={() => setModalOpen(false)} />
           ) : selectedTitle === 'Packaging Process' ? (
             <PackagingProcessModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Expert Avatar - Life Story' ? (
+            <ExpertAvatarLifeStoryModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === '3 expert activities - articles, offline appearances, interviews' ? (
+            <ExpertActivitiesModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Creating content a month in advance' ? (
+            <ContentMonthAdvanceModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Ideas for content rolls' ? (
+            <ContentRollsModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Script for the content roll' ? (
+            <ScriptContentRollModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Content for lead magnet page' ? (
+            <LeadMagnetPageModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Text ABOUT YOU on the landing page' ? (
+            <AboutYouLandingPageModal onClose={() => setModalOpen(false)} />
+          ) : selectedTitle === 'Mini offer - product ideas + headline and benefits' ? (
+            <MiniOfferModal onClose={() => setModalOpen(false)} />
           ) : (
             <ContentModal heading={selectedTitle || 'Assistant'} onClose={() => setModalOpen(false)} onNicheComplete={() => setNicheCompleted(true)} />
           )}

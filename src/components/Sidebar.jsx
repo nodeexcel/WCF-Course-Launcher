@@ -28,6 +28,30 @@ import { useNavigate, useLocation } from 'react-router-dom';
       "Packaging Process"
     ],
   },
+  {
+    id: 3,
+    title: "III. Expert Positioning Formula",
+    count: 4,
+    children: [
+      "Expert Avatar - Life Story",
+      "3 expert actions - articles",
+      "3 expert activities - articles, offline appearances, interviews",
+      "Creating content a month in advance"
+      
+    ],
+  },
+  {
+    id:4,
+    title: "IV. Magnetic Marketing System",
+    count: 5,
+    children: [
+      "Ideas for content rolls",
+      "Script for the content roll",
+      "Content for lead magnet page",
+      "Text ABOUT YOU on the landing page",
+      "Mini offer - product ideas + headline and benefits"
+    ]
+  }
 ];
 
 
